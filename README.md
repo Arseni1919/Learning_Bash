@@ -953,13 +953,334 @@ rsync -avz --progress source_folder/ destination_folder/
 
 ## File Compression
 
+### `zip`
+
+The `zip` command is used to package and compress files into a ZIP archive.
+
+Here are some common options you can use with the zip command:
+
+- `-r` - Recursively zip directories
+- `-u` - Update files in the archive if they are newer
+- `-d` - Delete files from the archive
+- `-e` - Encrypt the contents of the ZIP archive
+- `-x` - Exclude specific files from being zipped
+
+```bash
+zip archive.zip file1 file2
+```
+
+
+### `unzip`
+
+
+The `unzip` command is used to extract compressed files from a ZIP archive.
+
+Here are some common options you can use with the unzip command:
+
+- `-l` - List archive files
+- `-t` - Test compressed archive files
+- `-d` - Extract files into a different directory
+- `-o` - Overwrite existing files without prompting
+- `-x` - Exclude specific files from being extracted
+
+
+```bash
+unzip archive.zip -x file1
+unzip -l archive.zip
+unzip archive.zip
+```
+
+
+### `tar`
+
+The `tar` command is used to create, maintain, modify, and extract files from an archive file.
+
+The main difference is their philosophy on compression and operating system compatibility.
+
+ZIP is a "Compress, then Archive" tool. (Windows Standard)
+
+TAR is an "Archive, then Compress" tool. (Linux Standard)
+
+Here are some common options you can use with the tar command:
+
+- `-c` - Create a new archive
+- `-x` - Extract files from an archive
+- `-t` - List the contents of an archive
+- `-z` - Filter the archive through gzip
+- `-v` - Verbosely list files processed
+- `-f` - Specify the filename of the archive
+
+```bash
+tar -xvf archive.tar
+...
+```
+
+
 
 
 
 ## File Permissions
 
+Understanding File Permissions and Ownership
+
+In Unix-like operating systems, file permissions and ownership are crucial for managing access to files and directories.
+
+Each file has an owner, a group, and a set of permissions that determine who can read, write, or execute the file.
+
+File Permissions
+
+File permissions are represented by a series of characters that indicate the permissions for the _owner_, the _group_, and _others_. The permissions are:
+
+- `r`: Read permission
+- `w`: Write permission
+- `x`: Execute permission
+
+For example, the permission `rwxr-xr--` means the owner can read, write, and execute the file, the group can read and execute, and others can only read.
+
+
+Numeric Representation of Permissions
+File permissions can also be represented numerically, which is often used in scripts and command-line operations:
+
+- `0`: No permission
+- `1`: Execute permission
+- `2`: Write permission
+- `3`: Write and execute permissions
+- `4`: Read permission
+- `5`: Read and execute permissions
+- `6`: Read and write permissions
+- `7`: Read, write, and execute permissions
+
+For example, the numeric permission `755` means the owner can read, write, and execute (7), and the group and others can read and execute (5).
+
+
+File Ownership
+
+Each file has an owner and a group associated with it. The owner is typically the user who created the file, and the group is a collection of users who share access to the file.
+
+Commands like `chown` and `chgrp` are used to change the ownership and group of a file, respectively.
+
+Common Commands
+
+Here are some common commands for managing file permissions and ownership:
+
+`chmod`: Change file permissions
+`chown`: Change file ownership
+`chgrp`: Change group ownership
+
+
+
+### `chmod`
+
+
+The `chmod` command is used to change the file permissions in Unix-like operating systems.
+
+It allows you to set who can read, write, or execute a file.
+
+
+The `chmod` command has several options to customize its behavior:
+
+- `-R`: Change files and directories recursively.
+- `-v`: Output a diagnostic for every file processed.
+
+
+```bash
+chmod -R 755 /path/to/directory
+chmod -v 644 file.txt
+```
+
+
+### `chown`
+
+The `chown` command is used to change the ownership of files and directories in Unix-like operating systems.
+
+It allows you to set which user and group own a file.
+
+The `chown` command has several options to customize its behavior:
+
+- `-R`: Change files and directories recursively.
+- `-v`: Output a diagnostic for every file processed.
+
+
+```bash
+chown -R user:group /path/to/directory
+chown -v user file.txt
+```
+
+### `chgrp`
+
+
+The `chgrp` command is used to change the group ownership of files and directories in Unix-like operating systems. It allows you to set which group owns a file.
+
+
+The `chgrp` command has several options to customize its behavior:
+
+- `-R`: Change files and directories recursively.
+- `-v`: Output a diagnostic for every file processed.
+
 
 ## Scripting
+
+
+- `Comments`: Comments start with a # and Bash ignores them.
+- `Command Order`: Commands run one after the other, from top to bottom.
+- `Semicolons`: Use ; to run multiple commands on the same line.
+
+
+```bash
+# This script prints a greeting message
+echo "Hello, World!"
+echo "This is a test"; echo "This is another test"
+```
+
+
+Correct bash script:
+
+```bash
+#!/bin/bash
+# Assign a value to a variable
+name="World"
+echo "Hello, $name!"
+```
+
+### Variables
+
+Variables in Bash are used to store data that can be used and manipulated throughout your script or command-line session. Bash variables are untyped, meaning they can hold any type of data.
+
+
+
+```bash
+name="John Doe"
+echo "Hello, $name!"
+number=42
+echo "The number is $number"
+```
+
+Environment variables are special variables that affect the way processes run on your system. They are often used to store system-wide values like the location of executables or the default editor.
+
+```bash
+# Display the PATH environment variable
+echo "Your PATH is $PATH"
+```
+
+
+Local variables are only available within the block of code in which they are defined, such as within a function. Global variables are accessible from anywhere in the script.
+
+
+```bash
+# Define a local variable in a function
+my_function() {
+  local local_var="I am local"
+  echo $local_var
+}
+my_function
+```
+
+
+Variables can be used in various operations, such as concatenation and arithmetic.
+
+- `Concatenation`: Combine strings using variables.
+- `Arithmetic`: Perform calculations using variables.
+
+
+```bash
+# Concatenation
+greeting="Hello, "
+name="World"
+echo "$greeting$name"
+
+# Arithmetic
+num1=5
+num2=10
+sum=$((num1 + num2))
+echo "The sum is $sum"
+```
+
+
+
+### Data Types
+
+
+Strings
+
+Strings are sequences of characters used to store text. They can be manipulated using various string operations such as concatenation and substring extraction.
+
+
+
+```bash
+# String example
+greeting="Hello, World!"
+name="Alice"
+full_greeting="$greeting, $name!"
+echo $full_greeting
+```
+
+Numbers
+
+Numbers in Bash can be used for arithmetic operations. Bash supports integer arithmetic natively, such as addition, subtraction, multiplication, and division.
+
+
+```bash
+# Number example
+num1=5
+num2=10
+sum=$((num1 + num2))
+difference=$((num2 - num1))
+product=$((num1 * num2))
+quotient=$((num2 / num1))
+echo "Sum: $sum, Difference: $difference, Product: $product, Quotient: $quotient"
+```
+
+
+Arrays
+
+Arrays are used to store multiple values in a single variable. Each element in an array is accessed using an index. You can iterate over arrays and modify elements.
+
+```bash
+# Array example
+fruits=("apple" "banana" "cherry")
+for fruit in "${fruits[@]}"; do
+  echo $fruit
+done
+```
+
+Associative Arrays
+
+Associative arrays allow you to use named keys to access values. They are similar to dictionaries in other programming languages. You can add or remove keys and values.
+
+
+```bash
+# Associative array example
+declare -A colors
+colors[apple]="red"
+colors[banana]="yellow"
+colors[grape]="purple"
+unset colors[banana]
+echo ${colors[apple]} # red
+echo ${colors[grape]} # purple
+```
+
+You need to declare the dict first:
+
+```bash
+declare -A colors
+```
+
+Data Type Limitations
+
+Bash does not support floating-point arithmetic natively. For such operations, consider using external tools like `bc` or `awk`.
+
+
+
+### Operators
+
+
+
+
+
+
+
+
+
 
 
 
