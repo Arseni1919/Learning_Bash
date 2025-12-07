@@ -1,5 +1,17 @@
 # Learning Bash
 
+## Table of Contents
+
+- [Intro](#intro)
+- [Basic Commands](#basic-commands)
+- [Text Processing](#text-processing)
+- [System Monitoring](#system-monitoring)
+- [Networking](#networking)
+- [File Compression](#file-compression)
+- [File Permissions](#file-permissions)
+- [Scripting](#scripting)
+- [Credits](#credits)
+
 ## Intro 
 
 To check the version:
