@@ -752,7 +752,208 @@ uptime
 ## Networking
 
 
+### `ping`
+
+
+The `ping` command is used to send ICMP ECHO_REQUEST to network hosts.
+
+It's a useful tool for checking network connectivity and diagnosing network issues.
+
+
+The `ping` command has options to change how it works:
+
+- `-c` - Send a specific number of ping requests. This is useful for limiting the number of packets sent.
+- `-i` - Wait a specific number of seconds between sending each packet. This can be useful for reducing network traffic when using ping.
+- `-t` - Set the IP Time to Live (TTL). This determines the maximum number of hops a packet can take before being discarded.
+- `-q` - Quiet output, only show summary. This is useful for scripts or when you only need the final statistics.
+- `-s` - Specify the number of data bytes to be sent. This can be useful for testing network performance with different packet sizes.
+
+
+The output of the `ping` command provides several key pieces of information:
+
+- `Bytes`: The size of the ICMP packet sent
+- `Time`: The round-trip time it took for the packet to reach the host and return, measured in milliseconds
+- `TTL (Time to Live)`: The remaining lifespan of the packet, which decreases by one for each hop
+- `Packet Loss`: The percentage of packets that were lost during transmission
+- `Round-Trip Time Statistics`: Includes minimum, average, maximum, and standard deviation of the round-trip times
+
+
+```bash
+ping google.com
+ping -c 4 google.com
+ping -i 2 google.com
+ping -t 64 google.com
+ping -c 4 -q google.com
+
+```
+
+
+
+### `curl`
+
+
+The `curl` command is used to transfer data from or to a server using various protocols like HTTP, HTTPS, FTP, and more.
+
+It's a versatile tool for downloading files, testing APIs, and more.
+
+
+The `curl` command has options to change how it works:
+
+- `-O` - Save the file with the same name as the remote file. This is useful for downloading files directly to your local system with their original names.
+- `-L` - Follow redirects. This is useful when accessing URLs that may redirect to another location.
+- `-I` - Fetch the HTTP headers only. This is useful for checking server response headers without downloading the entire content.
+- `-d` - Send data with POST request. This is useful for submitting form data or interacting with APIs.
+- `-u` - Specify user and password for server authentication. This is useful for accessing protected resources.
+
+
+```bash
+curl http://example.com/file.txt
+curl -O http://example.com/file.txt
+curl -L http://example.com/redirect
+curl -I http://example.com
+curl -d "fname=John" https://www.example.com/action_page.php
+curl -u user:password http://example.com/protected
+```
+
+
+### `wget`
+
+
+
+The `wget` command is used to download files from the web.
+
+It's a powerful tool for downloading single files, entire websites, or even batch downloads.
+
+
+The `wget` command has options to change how it works:
+
+- `-b` - Run in the background. This is useful for long downloads that you don't want to monitor continuously.
+- `-q` - Quiet mode (no output). This is useful for scripts or automated tasks where output is not needed.
+- `-r` - Download directories recursively. This is useful for downloading entire websites or directories.
+- `-c` - Continue getting a partially-downloaded file. The -c option allows you to continue downloading a file that was partially downloaded. This is useful for resuming interrupted downloads.
+- `--lmit-rate` - Limit download speed. This is useful for managing bandwidth usage.
+
+
+```bash 
+wget http://example.com/file.txt
+wget -b http://example.com/file.txt
+wget -q http://example.com/file.txt
+wget -r http://example.com/directory/
+wget -c http://example.com/largefile.zip
+wget --limit-rate=200k http://example.com/file.txt
+```
+
+
+### `ssh`
+
+
+The `ssh` command is used to connect to a remote machine securely.
+
+To connect to a remote host, use `ssh user@hostname`.
+
+Here are some common options you can use with the `ssh` command:
+
+- `-p` - Specify the port. By default, SSH uses port 22.
+- `-i` - Use a private key file. This is useful when you have a specific key for a server.
+- `-v` - Enable verbose mode. This is helpful for debugging.
+- `-C` - Enable compression. The -C option enables compression, which can speed up data transfer by reducing the amount of data sent over the network.
+- `-X` - Enable X11 forwarding. The -X option allows X11 forwarding, enabling you to run graphical applications on the remote server and display them locally.
+- `-o` - Specify options directly on the command line. This is useful for overriding configuration settings.
+
+
+```bash
+ssh user@example.com
+ssh -p 2222 user@example.com
+ssh -i /path/to/private_key user@example.com
+ssh -v user@example.com
+ssh -C user@example.com
+ssh -X user@example.com
+ssh -o StrictHostKeyChecking=no user@example.com
+```
+
+
+### `scp`
+
+
+The `scp` command is used to securely copy files between hosts on a network.
+
+The `scp` command supports various options to customize its behavior:
+
+- `-r` - Recursively copy entire directories
+- `-P` - Specify the port to connect to on the remote host. By default, SCP uses port 22.
+- `-i` - Specify an identity (private key) file
+- `-C` - Enable compression
+- `-v` - Enable verbose mode
+- `-l` - Limit the bandwidth used by the copy
+
+
+```bash
+scp file.txt user@example.com:/home/user/
+...
+```
+
+- `cp` (Copy) is for moving files inside the same computer.
+- `scp` (Secure Copy) is for moving files between two different computers over the internet (or local network).
+
+
+
+
+### `rsync`
+
+
+The `rsync` command is used to efficiently transfer and synchronize files across computer systems, by checking the timestamp and size of files.
+
+Here are some common options you can use with the `rsync` command:
+
+- `-a` - Archive mode
+- `-v` - Increase verbosity
+- `-z` - Compress file data
+- `--delete` - Delete extraneous files
+- `-r` - Recurse into directories
+- `-u` - Skip files that are newer on the receiver
+- `--progress` - Show progress during transfer
+
+Here are the 4 main reasons we need it:
+
+1. The "Delta" Algorithm (Speed)
+
+This is the #1 reason. If you have a 10 GB file and you modify just 1 KB of it:
+
+cp / scp: Will copy the entire 10 GB again.
+
+rsync: Will compare the two files, detect the difference, and send only the 1 KB change.
+
+This saves massive amounts of bandwidth and time, especially over slow networks.
+
+2. It Can Resume (Resilience)
+
+If you are transferring a large file (e.g., 50GB of logs) and your internet cuts out at 90%:
+
+cp / scp: You have to start over from 0%.
+
+rsync: You run the command again, and it looks at what is already there and finishes the remaining 10%.
+
+3. True Mirroring (Synchronization)
+
+rsync ensures the destination folder looks exactly like the source folder.
+
+It preserves permissions, ownership, and timestamps (using the -a flag).
+
+It can delete files at the destination if they were deleted at the source (using the --delete flag). cp cannot do this.
+
+4. It works over SSH
+
+rsync is built to work securely over the network. It uses SSH by default for encryption, so it is just as secure as scp, but smarter.
+
+
+```bash
+rsync -avz --progress source_folder/ destination_folder/
+```
+
+
 ## File Compression
+
+
 
 
 ## File Permissions
