@@ -1274,12 +1274,190 @@ Bash does not support floating-point arithmetic natively. For such operations, c
 ### Operators
 
 
+Comparison Operators
+
+- `-eq`: Equal to
+- `-ne`: Not equal to
+- `-lt`: Less than
+- `-le`: Less than or equal to
+- `-gt`: Greater than
+- `-ge`: Greater than or equal to
+
+
+String Comparison Operators
+
+- `=`: Equal to
+- `!=`: Not equal to
+- `<`: Less than, in ASCII alphabetical order
+- `>`: Greater than, in ASCII alphabetical order
 
 
 
+Arithmetic Operators
+
+- `+`: Addition
+- `-`: Subtraction
+- `*`: Multiplication
+- `/`: Division
+- `%`: Modulus (remainder of division)
+
+For exponentiation, use external tools like `bc` or `awk`.
+
+Logical Operators
+
+- `&&`: Logical AND
+- `||`: Logical OR
+- `!`: Logical NOT
 
 
+File Test Operators
 
+- `-e`: Checks if a file exists
+- `-d`: Checks if a directory exists
+- `-f`: Checks if a file is a regular file
+- `-s`: Checks if a file is not empty
+
+These operators are used inside `if` statements (specifically inside the square brackets [ ... ]). They allow your script to make decisions based on the state of your filesystem.
+
+```bash
+if [ -e "./final_merged_logs.csv" ]; then
+    echo "Found the file (or folder)!"
+else
+    echo "Nothing exists at this path."
+fi
+```
+
+### Bash If...Else
+
+If statements allow you to execute code based on a condition. If the condition is true, the code block will run.
+
+The condition is enclosed in square brackets [ ] and the statement ends with fi, which is if spelled backward, marking the end of the if block.
+
+Example: If Statement
+
+```bash
+# Basic if statement
+num=15
+if [ $num -gt 10 ]; then
+  echo "Number is greater than 10"
+fi
+```
+
+
+Example: If...Else Statement
+
+
+```bash
+# If...else statement
+num=8
+if [ $num -gt 10 ]; then
+  echo "Number is greater than 10"
+else
+  echo "Number is 10 or less"
+fi
+```
+
+
+Example: Elif Statement
+
+```bash
+# If...elif...else statement
+num=10
+if [ $num -gt 10 ]; then
+  echo "Number is greater than 10"
+elif [ $num -eq 10 ]; then
+  echo "Number is exactly 10"
+else
+  echo "Number is less than 10"
+fi
+```
+
+
+Example: Nested If Statement
+
+```bash
+# Nested if statement
+num=5
+if [ $num -gt 0 ]; then
+  if [ $num -lt 10 ]; then
+    echo "Number is between 1 and 9"
+  fi
+fi
+```
+
+
+### Bash Loops
+
+
+Example: For Loop
+
+
+```bash
+# For loop example
+for i in {1..5}; do
+  echo "Iteration $i"
+done
+```
+
+
+Example: While Loop
+
+
+```bash
+# While loop example
+count=1
+while [ $count -le 5 ]; do
+  echo "Count is $count"
+  ((count++))
+done
+```
+
+Example: Until Loop
+
+
+Until loops are similar to while loops, but they execute until a specified condition becomes true.
+
+
+```bash
+# Until loop example
+count=1
+until [ $count -gt 5 ]; do
+  echo "Count is $count"
+  ((count++))
+done
+```
+
+Example: Break and Continue
+
+Break and continue statements are used to control loop execution. break exits the loop, while continue skips to the next iteration.
+
+
+```bash
+# Break and continue example
+for i in {1..5}; do
+  if [ $i -eq 3 ]; then
+    continue
+  fi
+  echo "Number $i"
+  if [ $i -eq 4 ]; then
+    break
+  fi
+done
+```
+
+
+Example: Nested Loops
+
+Nested loops allow you to place one loop inside another, enabling more complex iteration patterns.
+
+```bash
+# Nested loops example
+for i in {1..3}; do
+  for j in {1..2}; do
+    echo "Outer loop $i, Inner loop $j"
+  done
+done
+```
 
 
 
