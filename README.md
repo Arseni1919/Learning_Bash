@@ -226,6 +226,34 @@ Example: Adding Permanent Alias - Save and Apply
 source ~/.bashrc
 ```
 
+### `type`
+
+This is the most useful command because it tells you what the command is (alias, function, or file) and 
+displays the code if it is a function.
+
+```bash
+type -a function_name
+```
+
+If you already know it is a function, this command prints only the source code of that function, often formatted nicely.
+
+```bash
+declare -f function_name
+```
+
+
+### `grep` 
+
+
+To search for a pattern in a file, use `grep 'pattern' filename`
+
+The `grep` command has options to change how it works:
+
+- `-i` - Search ignoring case differences (uppercase or lowercase)
+- `-r` - Search through all files in a directory and its subdirectories
+- `-v` - Find lines that do not match the pattern
+
+
 
 
 
